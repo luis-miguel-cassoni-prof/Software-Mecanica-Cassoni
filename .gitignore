@@ -1,0 +1,7 @@
+oficina/target/
+oficina/src/main/resources/database.properties
+.vscode/
+*.log
+*.bak
+*.class
+*.jar
