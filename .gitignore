@@ -5,3 +5,4 @@ oficina/src/main/resources/database.properties
 *.bak
 *.class
 *.jar
+oficina/dependency-reduced-pom.xml
