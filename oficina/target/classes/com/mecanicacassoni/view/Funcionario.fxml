@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mecanicacassoni.controller.FuncionarioController">
    <children>
       <Label layoutX="60.0" layoutY="94.0" text="ID:">
@@ -49,5 +48,10 @@
           <TableColumn fx:id="colunaNome" prefWidth="286.0" text="NOME" />
         </columns>
       </TableView>
+      <Button layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#voltarMenu" prefHeight="0.0" prefWidth="72.0" text="Voltar">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

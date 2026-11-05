@@ -18,4 +18,5 @@ public class Prestacao {
     private LocalTime horaInicio;
     private LocalTime horaFim;
     private BigDecimal vlrMaterial;
+    private BigDecimal valorHora;
 }

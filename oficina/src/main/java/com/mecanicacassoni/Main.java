@@ -10,13 +10,13 @@ public class Main extends Application {
 
         @Override
         public void start(Stage stage) throws Exception {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mecanicacassoni/view/Funcionario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mecanicacassoni/view/Menu.fxml"));
 
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
 
-            stage.setTitle("Mecânica Cassoni - Funcionários");
+            stage.setTitle("Mecânica Cassoni");
             stage.setScene(scene);
             stage.show();
         }

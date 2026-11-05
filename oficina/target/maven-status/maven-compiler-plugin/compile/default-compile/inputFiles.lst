@@ -1,5 +1,9 @@
 C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\connection\ConnectionFactory.java
+C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\controller\ClienteController.java
 C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\controller\FuncionarioController.java
+C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\controller\MenuController.java
+C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\controller\PrestacaoController.java
+C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\controller\ServicoController.java
 C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\dao\ClienteDAO.java
 C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\dao\FuncionarioDAO.java
 C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\dao\PrestacaoDAO.java
@@ -9,4 +13,5 @@ C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\meca
 C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\model\Funcionario.java
 C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\model\Prestacao.java
 C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\model\Servico.java
-C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\TesteDAO.java
+C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\service\CalculadoraValorServico.java
+C:\Users\Miguel\Desktop\Software Mecanica Cassoni\oficina\src\main\java\com\mecanicacassoni\util\Navegacao.java

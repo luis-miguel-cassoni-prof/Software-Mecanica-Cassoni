@@ -1,3 +1,4 @@
+
 package com.mecanicacassoni.dao;
 
 import java.sql.Connection;
@@ -5,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +16,21 @@ import com.mecanicacassoni.model.Servico;
 public class ServicoDAO {
 
     public int inserir(Servico servico) throws SQLException {
-        String sql = "INSERT INTO servico (nome, id_cliente) VALUES (?, ?)";
+        String sql = "INSERT INTO servico (nome, id_cliente, valor_final) "
+                + "VALUES (?, ?, ?)";
 
         try (Connection conexao = ConnectionFactory.getConnection();
              PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, servico.getNome());
             ps.setInt(2, servico.getIdCliente());
+
+            if (servico.getValorFinal() != null) {
+                ps.setBigDecimal(3, servico.getValorFinal());
+            } else {
+                ps.setNull(3, Types.DECIMAL);
+            }
+
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -34,7 +44,7 @@ public class ServicoDAO {
     }
 
     public List<Servico> listarTodos() throws SQLException {
-        String sql = "SELECT id_servico, nome, id_cliente FROM servico";
+        String sql = "SELECT id_servico, nome, id_cliente, valor_final FROM servico";
         List<Servico> servicos = new ArrayList<>();
 
         try (Connection conexao = ConnectionFactory.getConnection();
@@ -42,13 +52,7 @@ public class ServicoDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Servico servico = new Servico();
-
-                servico.setIdServico(rs.getInt("id_servico"));
-                servico.setNome(rs.getString("nome"));
-                servico.setIdCliente(rs.getInt("id_cliente"));
-
-                servicos.add(servico);
+                servicos.add(mapearServico(rs));
             }
         }
 
@@ -56,7 +60,8 @@ public class ServicoDAO {
     }
 
     public Servico buscarPorId(int id) throws SQLException {
-        String sql = "SELECT id_servico, nome, id_cliente FROM servico WHERE id_servico = ?";
+        String sql = "SELECT id_servico, nome, id_cliente, valor_final "
+                + "FROM servico WHERE id_servico = ?";
 
         try (Connection conexao = ConnectionFactory.getConnection();
              PreparedStatement ps = conexao.prepareStatement(sql)) {
@@ -65,13 +70,7 @@ public class ServicoDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Servico servico = new Servico();
-
-                    servico.setIdServico(rs.getInt("id_servico"));
-                    servico.setNome(rs.getString("nome"));
-                    servico.setIdCliente(rs.getInt("id_cliente"));
-
-                    return servico;
+                    return mapearServico(rs);
                 }
             }
         }
@@ -80,14 +79,22 @@ public class ServicoDAO {
     }
 
     public boolean atualizar(Servico servico) throws SQLException {
-        String sql = "UPDATE servico SET nome = ?, id_cliente = ? WHERE id_servico = ?";
+        String sql = "UPDATE servico SET nome = ?, id_cliente = ?, "
+                + "valor_final = ? WHERE id_servico = ?";
 
         try (Connection conexao = ConnectionFactory.getConnection();
              PreparedStatement ps = conexao.prepareStatement(sql)) {
 
             ps.setString(1, servico.getNome());
             ps.setInt(2, servico.getIdCliente());
-            ps.setInt(3, servico.getIdServico());
+
+            if (servico.getValorFinal() != null) {
+                ps.setBigDecimal(3, servico.getValorFinal());
+            } else {
+                ps.setNull(3, Types.DECIMAL);
+            }
+
+            ps.setInt(4, servico.getIdServico());
 
             return ps.executeUpdate() > 0;
         }
@@ -103,5 +110,16 @@ public class ServicoDAO {
 
             return ps.executeUpdate() > 0;
         }
+    }
+
+    private Servico mapearServico(ResultSet rs) throws SQLException {
+        Servico servico = new Servico();
+
+        servico.setIdServico(rs.getInt("id_servico"));
+        servico.setNome(rs.getString("nome"));
+        servico.setIdCliente(rs.getInt("id_cliente"));
+        servico.setValorFinal(rs.getBigDecimal("valor_final"));
+
+        return servico;
     }
 }
