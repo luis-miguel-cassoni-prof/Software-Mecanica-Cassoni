@@ -89,6 +89,11 @@ Abra um terminal na pasta que contém o `pom.xml` e execute:
 mvn clean javafx:run
 ```
 
+Para empacotar o projeto e fazer um executável utilize:
+```bash
+mvn clean package
+```
+
 O Maven realizará a compilação e iniciará a aplicação JavaFX.
 
 ### 5. Utilizar o sistema
