@@ -106,3 +106,9 @@ Na tela inicial, selecione uma das opções:
 - **Prestações:** acessadas a partir de um serviço, permitindo registrar e consultar o trabalho realizado.
 
 Para cadastrar uma prestação, é necessário possuir previamente um serviço e um funcionário cadastrados.
+
+## LOG DE VERSÕES
+
+- 0.9.1 - Adicionados filtros de busca para serviços, utilizando o Cliente e o Ano.
+
+- 0.9.0 - Lançamento.
