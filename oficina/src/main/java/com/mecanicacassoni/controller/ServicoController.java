@@ -33,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -362,44 +363,44 @@ public class ServicoController {
     }
 
 
-@FXML
-private void acessarPrestacoes() {
-    Servico servico = tabelaServicos
-            .getSelectionModel()
-            .getSelectedItem();
+    @FXML
+    private void acessarPrestacoes() {
+        Servico servico = tabelaServicos
+                .getSelectionModel()
+                .getSelectedItem();
 
-    if (servico == null) {
-        mostrarAlerta(Alert.AlertType.WARNING, "Prestações",
-                "Selecione um serviço na tabela.");
-        return;
+        if (servico == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Prestações",
+                    "Selecione um serviço na tabela.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/com/mecanicacassoni/view/Prestacao.fxml"
+                    )
+            );
+
+            Parent root = loader.load();
+
+            PrestacaoController controller = loader.getController();
+            controller.definirServico(servico);
+
+            Stage stage = new Stage();
+            stage.setTitle("Prestações - " + servico.getNome());
+            stage.setScene(new Scene(root));
+
+            stage.setOnHidden(event -> carregarServicos());
+
+            stage.show();
+
+        } catch (IOException e) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Prestações",
+                    "Não foi possível abrir a tela de prestações.");
+            e.printStackTrace();
+        }
     }
-
-    try {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource(
-                        "/com/mecanicacassoni/view/Prestacao.fxml"
-                )
-        );
-
-        Parent root = loader.load();
-
-        PrestacaoController controller = loader.getController();
-        controller.definirServico(servico);
-
-        Stage stage = new Stage();
-        stage.setTitle("Prestações - " + servico.getNome());
-        stage.setScene(new Scene(root));
-
-        stage.setOnHidden(event -> carregarServicos());
-
-        stage.show();
-
-    } catch (IOException e) {
-        mostrarAlerta(Alert.AlertType.ERROR, "Prestações",
-                "Não foi possível abrir a tela de prestações.");
-        e.printStackTrace();
-    }
-}
 
 
     private void carregarClientes() {
@@ -624,5 +625,75 @@ private void acessarPrestacoes() {
             alerta.showAndWait();
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void acessarFiltro() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/com/mecanicacassoni/view/FiltroServico.fxml"
+                    )
+            );
+
+            Parent root = loader.load();
+
+            FiltroServicoController controller = loader.getController();
+            controller.definirPesquisa(this::aplicarFiltro);
+
+            Stage stage = new Stage();
+            stage.setTitle("Filtrar Serviços");
+            stage.initOwner(tabelaServicos.getScene().getWindow());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            mostrarAlerta(
+                    Alert.AlertType.ERROR,
+                    "Filtros",
+                    "Não foi possível abrir a tela de filtros."
+            );
+            e.printStackTrace();
+        }
+    }
+
+    private boolean aplicarFiltro(int idCliente, int ano) {
+        try {
+            List<Servico> resultado =
+                    servicoDAO.listarPorAnoECliente(idCliente, ano);
+
+            carregarTotaisAutomaticos();
+            limparCampos();
+
+            tabelaServicos.setItems(
+                    FXCollections.observableArrayList(resultado)
+            );
+
+            tabelaServicos.refresh();
+            return true;
+
+        } catch (SQLException e) {
+            mostrarErroSql(
+                    "Filtros",
+                    "Não foi possível realizar a pesquisa.",
+                    e
+            );
+            return false;
+
+        } catch (IllegalArgumentException e) {
+            mostrarAlerta(
+                    Alert.AlertType.ERROR,
+                    "Filtros",
+                    e.getMessage()
+            );
+            return false;
+        }
+    }
+
+    @FXML
+    private void limparFiltro() {
+        limparCampos();
+        carregarServicos();
     }
 }

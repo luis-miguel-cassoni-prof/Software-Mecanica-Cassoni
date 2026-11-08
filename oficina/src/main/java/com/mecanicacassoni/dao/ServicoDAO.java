@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,5 +122,40 @@ public class ServicoDAO {
         servico.setValorFinal(rs.getBigDecimal("valor_final"));
 
         return servico;
+    }
+
+    public List<Servico> listarPorAnoECliente(int idCliente, int ano) throws SQLException {
+        String sql = "SELECT s.*\n" + //
+        "FROM servico s\n" + //
+        "WHERE s.id_cliente = ?\n" + //
+        "  AND EXISTS (\n" + //
+        "      SELECT 1\n" + //
+        "      FROM prestacao p\n" + //
+        "      WHERE p.id_servico = s.id_servico\n" + //
+        "        AND p.data >= ?\n" + //
+        "        AND p.data < ?\n" + //
+        "  );";
+        
+        LocalDate dataEspecifica = LocalDate.of(ano, 01, 01);
+        LocalDate finalDoFiltro = dataEspecifica.plusYears(1);
+
+        List<Servico> servicos = new ArrayList<>();
+
+        try (Connection conexao = ConnectionFactory.getConnection();
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ) {
+
+            ps.setInt(1, idCliente);
+            ps.setDate(2, java.sql.Date.valueOf(dataEspecifica));
+            ps.setDate(3, java.sql.Date.valueOf(finalDoFiltro));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    servicos.add(mapearServico(rs));
+                }
+            }
+        }
+
+        return servicos;
     }
 }

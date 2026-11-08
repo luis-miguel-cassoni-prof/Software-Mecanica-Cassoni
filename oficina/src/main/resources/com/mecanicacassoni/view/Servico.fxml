@@ -83,5 +83,15 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Button layoutX="115.0" layoutY="17.0" mnemonicParsing="false" onAction="#acessarFiltro" text="Buscar por Filtro">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="130.0" layoutY="64.0" mnemonicParsing="false" onAction="#limparFiltro" text="Limpar Filtro">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
