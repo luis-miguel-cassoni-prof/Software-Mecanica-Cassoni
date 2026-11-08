@@ -30,7 +30,7 @@
             <Font name="Arial" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtMes" layoutX="222.0" layoutY="233.0" text="EM BREVE..." />
+      <TextField fx:id="txtMes" layoutX="222.0" layoutY="233.0" text="EM BREVE..." disable="true" />
       <Label layoutX="274.0" layoutY="264.0" prefHeight="23.0" prefWidth="46.0" text="ANO">
          <font>
             <Font name="Arial" size="20.0" />
